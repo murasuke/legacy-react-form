@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+@utility vb-base {
+  @apply text-[14px] font-['MS_Sans_Serif','MS_UI_Gothic',Tahoma,sans-serif];
+}
+
+@utility vb-raised {
+  @apply border border-t-white border-l-white border-r-[#404040] border-b-[#404040]
+    shadow-[inset_-1px_-1px_0_#808080,inset_1px_1px_0_#dfdfdf];
+}
+
+@utility vb-sunken {
+  @apply border border-t-[#404040] border-l-[#404040] border-r-white border-b-white
+    shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf];
+}
+
+.vb-button {
+  @apply vb-base vb-raised min-w-[84px] bg-[#c0c0c0] px-3 py-[3px]
+    text-black active:border-t-[#404040] active:border-l-[#404040]
+    active:border-r-white active:border-b-white
+    active:shadow-[inset_1px_1px_0_#808080]
+    active:translate-x-[1px] active:translate-y-[1px]
+    disabled:text-[#808080];
+}
+
+.vb-textbox {
+  @apply vb-base vb-sunken min-h-[19px] bg-white px-1 py-0
+    text-black outline-none disabled:bg-[#c0c0c0] disabled:text-[#808080]
+    focus:outline focus:outline-1 focus:outline-[#000080] focus:outline-offset-[-2px];
+}
+
+:root {
+  font-family: "MS UI Gothic", "Tahoma", Arial, sans-serif;
+  color: #000;
+  background: #008080;
+  font-synthesis: none;
+  text-rendering: optimizeSpeed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow: auto;
+  font-size: 14px;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: default;
+}
+
+.vb-desktop {
+  display: grid;
+  min-height: 100vh;
+  padding: 34px 20px;
+  place-items: start center;
+  background-color: #008080;
+}
+
+.vb-window {
+  width: min(100%, 760px);
+  min-height: 200px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #fff #404040 #404040 #fff;
+  outline: 1px solid #000;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.vb-form {
+  width: 100%;
+  background: #c0c0c0;
+}
+
+.vb-titlebar {
+  display: flex;
+  height: 25px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 3px 2px 4px;
+  color: #fff;
+  background: #000080;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+}
+
+.vb-titlebar__identity,
+.vb-titlebar__controls {
+  display: flex;
+  align-items: center;
+}
+
+.vb-titlebar__identity {
+  min-width: 0;
+  gap: 3px;
+}
+
+.vb-titlebar__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+.vb-titlebar__icon svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.vb-titlebar__caption {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vb-titlebar__controls {
+  gap: 2px;
+  padding-left: 8px;
+}
+
+.vb-titlebar__controls span {
+  display: grid;
+  width: 18px;
+  height: 17px;
+  place-items: center;
+  color: #000;
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #fff #404040 #404040 #fff;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 11px;
+}
+
+.vb-menubar {
+  display: flex;
+  height: 21px;
+  align-items: center;
+  gap: 20px;
+  padding: 2px 8px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+}
+
+.vb-menubar span {
+  white-space: nowrap;
+}
+
+.vb-client-area {
+  padding: 10px 14px 12px;
+}
+
+.vb-form {
+  width: 100%;
+}
+
+.vb-groupbox {
+  margin: 0;
+  padding: 4px 12px 12px 12px;
+  border: 1px solid #808080;
+  border-top-color: #404040;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.vb-groupbox legend {
+  background: #c0c0c0;
+  padding: 0 4px;
+}
+
+.vb-fields {
+  display: grid;
+  gap: 10px;
+}
+
+.vb-field {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.vb-field__label {
+  text-align: left;
+  font-weight: 700;
+}
+
+
+.vb-select {
+  width: 100%;
+  min-height: 21px;
+  padding: 1px 3px;
+  color: #000;
+  background: #fff;
+  border: 1px solid;
+  border-color: #404040 #fff #fff #404040;
+  outline: none;
+}
+
+.vb-select:focus {
+  outline: 1px solid #000080;
+  outline-offset: -2px;
+}
+
+.vb-radio-group {
+  margin: 0;
+  padding: 9px 12px 10px;
+  border: 1px solid #808080;
+  border-top-color: #404040;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.vb-radio-group legend {
+  padding: 0 4px;
+  background: #c0c0c0;
+  font-weight: 700;
+}
+
+.vb-radio-group__options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+
+.vb-radio-field .vb-radio-group__options {
+  grid-column: 2;
+  min-height: 18px;
+}
+
+.vb-radio-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.vb-radio-option input {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin: 0;
+  accent-color: #000;
+}
+
+.vb-button:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.vb-statusbar {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 2px 2px;
+  padding: 2px;
+  border: 1px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-shadow:
+    inset 1px 1px 0 #404040,
+    inset -1px -1px 0 #dfdfdf;
+  color: #404040;
+}
+
+.vb-statusbar__grip {
+  color: #808080;
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  .vb-desktop {
+    padding: 16px 10px;
+  }
+
+  .vb-client-area {
+    padding-inline: 14px;
+  }
+
+}
+
+@media (max-width: 430px) {
+  .vb-client-area {
+    padding-inline: 10px;
+  }
+
+  .vb-field {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .vb-field__label {
+    text-align: left;
+  }
+
+  .vb-radio-field {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .vb-radio-field .vb-radio-group__options {
+    grid-column: 1;
+    gap: 6px 12px;
+  }
+}
