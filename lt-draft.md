@@ -64,9 +64,6 @@ React、Tailwind、shadcn/ui、Radix、Headless UI……
 
 # 3. Windows 95 / VBっぽさの正体
 
-ここが技術ネタの核です。
-
-「レガシーっぽい」と感じる要素を分解します。
 
 ```text
 ・背景は #c0c0c0
@@ -80,7 +77,6 @@ React、Tailwind、shadcn/ui、Radix、Headless UI……
 ・全部ちょっと窮屈
 ```
 
-ここで重要なのは、**懐かしさをCSSのルールに落とせる**という話です。
 
 ```text
 「古いUIっぽさ」は、雰囲気ではなくCSSで分解できる
@@ -168,23 +164,22 @@ GroupBox: line + legend
 ここでLTの技術的なメインに入ります。
 
 ```tsx
-const raised =
-  "border border-t-white border-l-white border-r-[#404040] border-b-[#404040]";
+import type { ButtonHTMLAttributes } from 'react';
 
-const sunken =
-  "border border-t-[#404040] border-l-[#404040] border-r-white border-b-white";
+export type VBButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  label?: string;
+};
 
-export function Win95Button({ children, ...props }) {
+export function VBButton({
+  className = '',
+  children,
+  label,
+  ...props
+}: VBButtonProps) {
   return (
-    <button className={`win95-base ${raised} px-4 py-[2px]`} {...props}>
-      {children}
+    <button className={`vb-button ${className}`} {...props}>
+      {label ?? children}
     </button>
-  );
-}
-
-export function Win95TextBox(props) {
-  return (
-    <input className={`win95-base ${sunken} bg-white px-1 py-[2px]`} {...props} />
   );
 }
 ```
