@@ -72,6 +72,7 @@ React、Tailwind、shadcn/ui、Radix、Headless UI……
 ・「ｶﾀｶﾅ」は半角
 ・余白は狭い
 ・ボタンは左上が明るく、右下が暗い
+・クリックするとへこむ
 ・入力欄は逆に沈んでいる
 ・タイトルバーは濃い青
 ・全部ちょっと窮屈
@@ -86,14 +87,11 @@ React、Tailwind、shadcn/ui、Radix、Headless UI……
 
 # 4. Tailwindで立体ボタンを作る
 
-ここで具体例。
-
 ```tsx
 <button
   className="
-    bg-[#c0c0c0] px-4 py-[2px] text-[11px]
-    border
-    border-t-white border-l-white
+    border py-0.5 px-4 bg-[#c0c0c0]
+    border-l-white border-t-white
     border-r-[#404040] border-b-[#404040]
     shadow-[inset_-1px_-1px_0_#808080,inset_1px_1px_0_#dfdfdf]
   "
@@ -101,31 +99,33 @@ React、Tailwind、shadcn/ui、Radix、Headless UI……
   OK
 </button>
 ```
-
-説明はシンプルでいいです。
-
+![alt text](image-2.png)
 ```text
+枠あり 上下左右にパディング(横が広い) 背景色は灰色(コントロール色)
 左上を白くする
 右下を黒くする
+枠の内側にうっすらと影をつけてぼやかす
 これだけで「押せそう」になる
 ```
 
 そして押下状態。
 
 ```tsx
-active:border-t-[#404040]
-active:border-l-[#404040]
-active:border-r-white
-active:border-b-white
-active:translate-x-[1px]
-active:translate-y-[1px]
+active:border-t-[#404040] active:border-l-[#404040]
+active:border-r-white active:border-b-white
+active:shadow-[inset_1px_1px_0_#808080]
+active:translate-x-[1px] active:translate-y-[1px]
 ```
 
-ここで笑いどころ。
+![alt text](image-3.png)
+
 
 ```text
-現代UIでは影をふわっと付けます。
-Windows 95では、白と黒で殴ります。
+左上を黒くくする
+右下を白くする
+枠の内側にうっすらと影をつけてぼやかす
+translateで右下へ1px移動して動きをつける
+これだけで「押した」感じをだす
 ```
 
 ---
