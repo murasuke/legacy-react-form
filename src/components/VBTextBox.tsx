@@ -4,11 +4,16 @@ export type VBTextBoxProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
 };
 
-export function VBTextBox({ className = '', label, ...props }: VBTextBoxProps) {
+export function VBTextBox({
+  type = 'text',
+  className = '',
+  label,
+  ...props
+}: VBTextBoxProps) {
   return (
     <label className="vb-field">
       {label && <span className="vb-field__label">{label}</span>}
-      <input className={`vb-textbox ${className}`} {...props} />
+      <input type={type} className={`vb-textbox ${className}`} {...props} />
     </label>
   );
 }

@@ -102,13 +102,15 @@ React、Tailwind、shadcn/ui、Radix、Headless UI……
 ![alt text](image-2.png)
 ```text
 枠あり 上下左右にパディング(横が広い) 背景色は灰色(コントロール色)
-左上を白くする
-右下を黒くする
+左上枠を白くする
+右下枠を黒くする
 枠の内側にうっすらと影をつけてぼやかす
-これだけで「押せそう」になる
-```
 
-そして押下状態。
+
+```
+「押せそう」なボタンの出来上がり
+
+そして、クリック中は「凹んだ」感じにします
 
 ```tsx
 active:border-t-[#404040] active:border-l-[#404040]
@@ -121,11 +123,10 @@ active:translate-x-[1px] active:translate-y-[1px]
 
 
 ```text
-左上を黒くくする
-右下を白くする
+左上枠を黒くくする
+右下枠を白くする
 枠の内側にうっすらと影をつけてぼやかす
 translateで右下へ1px移動して動きをつける
-これだけで「押した」感じをだす
 ```
 
 ---
@@ -137,8 +138,8 @@ translateで右下へ1px移動して動きをつける
 ```tsx
 <input
   className="
-    bg-white px-1 py-[2px] text-[11px]
-    border
+    border py-0 px-0.5 bg-white
+    outline-none
     border-t-[#404040] border-l-[#404040]
     border-r-white border-b-white
     shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf]
@@ -146,23 +147,61 @@ translateで右下へ1px移動して動きをつける
 />
 ```
 
-ここで整理。
 
 ```text
-Button: raised
-TextBox: sunken
-Panel: raised / sunken
-GroupBox: line + legend
+枠あり 上下左右パディングを小さく 背景色は白
+フォーカス時の枠を消す
+左上枠を黒くくする
+右下枠を白くする
+枠の内側にうっすらと影をつけてぼやかす
+```
+---
+# 再利用可能なユーティリティークラスを作る
+
+コントロールの「でこぼこ」は、複数コントロール間で共有できるため、Tailwindの`@utility`を利用して部品化します
+
+
+膨らんだように見えるborder
+```css
+@utility vb-raised {
+  @apply border border-t-white border-l-white border-r-[#404040] border-b-[#404040]
+    shadow-[inset_-1px_-1px_0_#808080,inset_1px_1px_0_#dfdfdf];
+}
 ```
 
-つまり、VB風UIの基本は **raised と sunken の2種類**でかなり作れる。
+凹んだように見えるborder
+```css
+@utility vb-sunken {
+  @apply border border-t-[#404040] border-l-[#404040] border-r-white border-b-white
+    shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf];
+}
+```
+
+
+カスタムクラスで、ボタンに必要なスタイルをまとめます
+```css
+.vb-button {
+   @apply vb-raised py-0.5 px-4 bg-[#c0c0c0]
+    active:border-t-[#404040] active:border-l-[#404040]
+    active:border-r-white active:border-b-white
+    active:shadow-[inset_1px_1px_0_#808080]
+    active:translate-x-[1px] active:translate-y-[1px]
+}
+
+.vb-textbox {
+  @apply vb-sunken bg-white px-0.5 py-0 outline-none
+
+}
+
+```
 
 ---
 
 # 6. Reactコンポーネント化する
 
-ここでLTの技術的なメインに入ります。
 
+
+カスタムクラスを適用した&lt;VBButton&gt;コンポーネントを作成します
 ```tsx
 import type { ButtonHTMLAttributes } from 'react';
 
@@ -184,21 +223,14 @@ export function VBButton({
 }
 ```
 
-ここで言いたいこと。
-
 ```text
-Tailwindを直接HTMLに書き続けると地獄。
-でもReactコンポーネントに閉じ込めると、急に扱いやすくなる。
+細かいスタイルはカスタムクラスで閉じ込め、それをReactコンポーネントから利用することで、すっきりとしたコンポーネントを作成することができます
 ```
 
-さらに、
 
-```text
-見た目のルールをコンポーネントに封じ込める
-= 小さなデザインシステム
+```tsx
+<VBButton>ボタン</VBButton>
 ```
-
-とつなげると、ちゃんと技術LTになります。
 
 ---
 
@@ -213,7 +245,7 @@ Visual Basic:
 Form に Label / TextBox / CommandButton を置く
 
 React:
-Component に Label / TextBox / Button を置く
+tsx に Label / TextBox / Button を置く
 ```
 
 スライドに並べると面白いです。
@@ -221,11 +253,11 @@ Component に Label / TextBox / Button を置く
 ```text
 VB6                         React
 ------------------------------------------------
-Form1                       <Win95Window>
-Label                       <Win95Label>
-TextBox                     <Win95TextBox>
-CommandButton               <Win95Button>
-Frame                       <Win95GroupBox>
+Form1                       <VBWindow><VBForm>
+Label                       <VBLabel>
+TextBox                     <VBTextBox>
+CommandButton               <VBButton>
+Frame                       <VBFrame>
 ```
 
 そして一言。
@@ -250,7 +282,6 @@ Frame                       <Win95GroupBox>
 ・型はTypeScript
 ・状態管理も普通にできる
 ・アクセシビリティもちゃんと考えられる
-・レスポンシブにもできる
 ```
 
 ここで、
@@ -278,8 +309,8 @@ Frame                       <Win95GroupBox>
 特にこの一言がいいです。
 
 ```text
-完全再現を目指すと、WindowsのUI仕様と戦うことになります。
-今日は雰囲気で勝ちます。
+完全再現を目指すと、ブラウザ間の互換性と戦うことになります。
+あの頃の雰囲気だけ再現できれば勝ちです。
 ```
 
 ---
@@ -304,6 +335,11 @@ Web上で再発明していたのかもしれません。
 ```
 
 最後のスライドに、
+
+現在のWebでできて、VB6でできなかったことに「レスポンシブ対応」があります。
+じつは、VB6の見た目をもちながら、レスポンシブ対応が自然にできる、という利点がありました。
+最後に、実際にデモを行ってみます
+
 
 ```text
 令和の Form1、完成。

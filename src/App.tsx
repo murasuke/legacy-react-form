@@ -1,6 +1,7 @@
 import { LoginPage } from './pages/LoginPage';
 import { EmployeeMasterPage } from './pages/EmployeeMasterPage';
 import { VBButton } from './components/VBButton';
+import { VBTextBox } from './components/VBTextBox';
 import { SimpleMaster } from './pages/SimpleMaster';
 import { ModernMaster } from './pages/ModernMaster';
 import { Vb6StyleGuidePage } from './pages/Vb6StyleGuidePage';
@@ -60,9 +61,17 @@ function App() {
       <br />
       <input
         type="text"
-        className="border py-0.5 px-2 bg-white"
+        className="
+          border py-0 px-0.5 bg-white outline-none
+          border-t-[#404040] border-l-[#404040]
+          border-r-white border-b-white
+          shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf]
+        "
         value="テキスト"
       />
+      <br />
+      <br />
+      <VBTextBox value="テキスト"></VBTextBox>
     </div>
   );
 }

@@ -14,19 +14,30 @@
     shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf];
 }
 
-.vb-button {
+/* .vb-button {
   @apply vb-base vb-raised min-w-[84px] bg-[#c0c0c0] px-3 py-[3px]
     text-black active:border-t-[#404040] active:border-l-[#404040]
     active:border-r-white active:border-b-white
     active:shadow-[inset_1px_1px_0_#808080]
     active:translate-x-[1px] active:translate-y-[1px]
     disabled:text-[#808080];
+} */
+
+.vb-button {
+   @apply border py-0.5 px-4 bg-[#c0c0c0]
+    border-l-white border-t-white
+    border-r-[#404040] border-b-[#404040]
+    shadow-[inset_-1px_-1px_0_#808080,inset_1px_1px_0_#dfdfdf]
+    active:border-t-[#404040] active:border-l-[#404040]
+    active:border-r-white active:border-b-white
+    active:shadow-[inset_1px_1px_0_#808080]
+    active:translate-x-[1px] active:translate-y-[1px]
 }
 
 .vb-textbox {
   @apply vb-base vb-sunken min-h-[19px] bg-white px-1 py-0
     text-black outline-none disabled:bg-[#c0c0c0] disabled:text-[#808080]
-    focus:outline focus:outline-1 focus:outline-[#000080] focus:outline-offset-[-2px];
+    focus:outline focus:outline-[#000080] focus:outline-offset-[-2px];
 }
 
 :root {
@@ -131,7 +142,7 @@ button {
 }
 
 .vb-titlebar__controls {
-  gap: 2px;
+  gap: 2px;shadow-[inset_1px_1px_0_#808080]
   padding-left: 8px;
 }
 
