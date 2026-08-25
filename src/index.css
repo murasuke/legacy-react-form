@@ -1,45 +1,56 @@
 @import "tailwindcss";
 
+/* VB6 design primitives */
 @utility vb-base {
   @apply text-[14px] font-['MS_Sans_Serif','MS_UI_Gothic',Tahoma,sans-serif];
 }
 
+@utility vb-raised-edge {
+  @apply border border-t-white border-l-white border-r-[#404040] border-b-[#404040];
+}
+
 @utility vb-raised {
-  @apply border border-t-white border-l-white border-r-[#404040] border-b-[#404040]
+  @apply vb-raised-edge
     shadow-[inset_-1px_-1px_0_#808080,inset_1px_1px_0_#dfdfdf];
 }
 
+@utility vb-sunken-edge {
+  @apply border border-t-[#404040] border-l-[#404040] border-r-white border-b-white;
+}
+
 @utility vb-sunken {
-  @apply border border-t-[#404040] border-l-[#404040] border-r-white border-b-white
+  @apply vb-sunken-edge
     shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf];
 }
 
-/* .vb-button {
-  @apply vb-base vb-raised min-w-[84px] bg-[#c0c0c0] px-3 py-[3px]
-    text-black active:border-t-[#404040] active:border-l-[#404040]
-    active:border-r-white active:border-b-white
-    active:shadow-[inset_1px_1px_0_#808080]
-    active:translate-x-[1px] active:translate-y-[1px]
-    disabled:text-[#808080];
-} */
-
-.vb-button {
-   @apply border py-0.5 px-4 bg-[#c0c0c0]
-    border-l-white border-t-white
-    border-r-[#404040] border-b-[#404040]
-    shadow-[inset_-1px_-1px_0_#808080,inset_1px_1px_0_#dfdfdf]
+@utility vb-active-sunken {
+  @apply active:translate-x-[1px] active:translate-y-[1px]
     active:border-t-[#404040] active:border-l-[#404040]
     active:border-r-white active:border-b-white
-    active:shadow-[inset_1px_1px_0_#808080]
-    active:translate-x-[1px] active:translate-y-[1px]
+    active:shadow-[inset_1px_1px_0_#808080,inset_-1px_-1px_0_#dfdfdf];
 }
 
-.vb-textbox {
-  @apply vb-base vb-sunken min-h-[19px] bg-white px-1 py-0
-    text-black outline-none disabled:bg-[#c0c0c0] disabled:text-[#808080]
+@utility vb-input-control {
+  @apply vb-base vb-sunken bg-white text-black outline-none
+    disabled:bg-[#c0c0c0] disabled:text-[#808080]
     focus:outline focus:outline-[#000080] focus:outline-offset-[-2px];
 }
 
+@utility vb-framed {
+  border: 1px solid #808080;
+  border-top-color: #404040;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+@utility vb-choice-control {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin: 0;
+  accent-color: #000;
+}
+
+/* Document */
 :root {
   font-family: "MS UI Gothic", "Tahoma", Arial, sans-serif;
   color: #000;
@@ -68,7 +79,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -76,6 +88,7 @@ button {
   cursor: default;
 }
 
+/* Window */
 .vb-desktop {
   display: grid;
   min-height: 100vh;
@@ -92,11 +105,6 @@ button {
   border-color: #fff #404040 #404040 #fff;
   outline: 1px solid #000;
   box-shadow: 2px 2px 0 #000;
-}
-
-.vb-form {
-  width: 100%;
-  background: #c0c0c0;
 }
 
 .vb-titlebar {
@@ -142,19 +150,19 @@ button {
 }
 
 .vb-titlebar__controls {
-  gap: 2px;shadow-[inset_1px_1px_0_#808080]
+  gap: 2px;
   padding-left: 8px;
 }
 
 .vb-titlebar__controls span {
+  @apply vb-raised-edge;
+
   display: grid;
   width: 18px;
   height: 17px;
   place-items: center;
   color: #000;
   background: #c0c0c0;
-  border: 1px solid;
-  border-color: #fff #404040 #404040 #fff;
   font-family: Arial, sans-serif;
   font-size: 13px;
   font-weight: 700;
@@ -179,26 +187,55 @@ button {
   padding: 10px 14px 12px;
 }
 
+.vb-statusbar {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 2px 2px;
+  padding: 2px;
+  color: #404040;
+  border: 1px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-shadow:
+    inset 1px 1px 0 #404040,
+    inset -1px -1px 0 #dfdfdf;
+}
+
+.vb-statusbar__grip {
+  color: #808080;
+  font-size: 12px;
+}
+
+/* Form layout */
 .vb-form {
   width: 100%;
+  background: #c0c0c0;
+}
+
+.vb-groupbox,
+.vb-radio-group {
+  @apply vb-framed;
+
+  margin: 0;
 }
 
 .vb-groupbox {
-  margin: 0;
-  padding: 4px 12px 12px 12px;
-  border: 1px solid #808080;
-  border-top-color: #404040;
-  box-shadow: inset 1px 1px 0 #fff;
+  padding: 4px 12px 12px;
 }
 
-.vb-groupbox legend {
-  background: #c0c0c0;
+.vb-radio-group {
+  padding: 9px 12px 10px;
+}
+
+.vb-groupbox legend,
+.vb-radio-group legend {
   padding: 0 4px;
+  background: #c0c0c0;
 }
 
-.vb-fields {
-  display: grid;
-  gap: 10px;
+.vb-radio-group legend {
+  font-weight: 700;
 }
 
 .vb-field {
@@ -213,35 +250,48 @@ button {
   font-weight: 700;
 }
 
+/* Form controls */
+.vb-button {
+  @apply vb-raised vb-active-sunken min-w-[84px] bg-[#c0c0c0]
+    px-3 py-[3px] text-black disabled:text-[#808080];
+}
+
+.vb-button:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.vb-textbox {
+  @apply vb-input-control min-h-[19px] px-1 py-0;
+}
+
+.vb-textarea {
+  @apply vb-input-control min-h-[64px] w-full resize-y px-1 py-[2px];
+}
+
+.vb-textarea-field {
+  align-items: start;
+}
 
 .vb-select {
-  width: 100%;
-  min-height: 21px;
-  padding: 1px 3px;
-  color: #000;
-  background: #fff;
-  border: 1px solid;
-  border-color: #404040 #fff #fff #404040;
-  outline: none;
+  @apply vb-input-control min-h-[21px] w-full px-[3px] py-px;
 }
 
-.vb-select:focus {
-  outline: 1px solid #000080;
-  outline-offset: -2px;
+.vb-checkbox {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+  line-height: 18px;
 }
 
-.vb-radio-group {
-  margin: 0;
-  padding: 9px 12px 10px;
-  border: 1px solid #808080;
-  border-top-color: #404040;
-  box-shadow: inset 1px 1px 0 #fff;
+.vb-checkbox__input,
+.vb-radio-option input {
+  @apply vb-choice-control;
 }
 
-.vb-radio-group legend {
-  padding: 0 4px;
-  background: #c0c0c0;
-  font-weight: 700;
+.vb-checkbox:has(.vb-checkbox__input:disabled) {
+  color: #808080;
 }
 
 .vb-radio-group__options {
@@ -263,39 +313,7 @@ button {
   white-space: nowrap;
 }
 
-.vb-radio-option input {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
-  margin: 0;
-  accent-color: #000;
-}
-
-.vb-button:focus-visible {
-  outline: 1px dotted #000;
-  outline-offset: -4px;
-}
-
-.vb-statusbar {
-  display: flex;
-  height: 24px;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 2px 2px;
-  padding: 2px;
-  border: 1px solid;
-  border-color: #808080 #fff #fff #808080;
-  box-shadow:
-    inset 1px 1px 0 #404040,
-    inset -1px -1px 0 #dfdfdf;
-  color: #404040;
-}
-
-.vb-statusbar__grip {
-  color: #808080;
-  font-size: 12px;
-}
-
+/* Responsive */
 @media (max-width: 560px) {
   .vb-desktop {
     padding: 16px 10px;
@@ -304,7 +322,6 @@ button {
   .vb-client-area {
     padding-inline: 14px;
   }
-
 }
 
 @media (max-width: 430px) {
@@ -312,15 +329,7 @@ button {
     padding-inline: 10px;
   }
 
-  .vb-field {
-    grid-template-columns: 1fr;
-    gap: 3px;
-  }
-
-  .vb-field__label {
-    text-align: left;
-  }
-
+  .vb-field,
   .vb-radio-field {
     grid-template-columns: 1fr;
     gap: 3px;

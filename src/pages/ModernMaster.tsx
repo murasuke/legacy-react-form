@@ -94,6 +94,13 @@ export function ModernMaster() {
             </div>
           </fieldset>
 
+          <p
+            className="rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600 ring-1 ring-slate-200"
+            aria-live="polite"
+          >
+            {status}
+          </p>
+
           <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:justify-end">
             <button
               className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-100"
